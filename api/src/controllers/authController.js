@@ -17,7 +17,7 @@ const register = async (req, res) => {
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({
+            return res.status(409).json({
                 success: false,
                 message: "User with this email already exists."
             });
@@ -66,7 +66,7 @@ const login = async (req, res) => {
 
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({
+            return res.status(401).json({
                 success: false,
                 message: "Invalid email or password."
             });
