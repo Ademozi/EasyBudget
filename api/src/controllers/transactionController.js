@@ -22,9 +22,9 @@ const createTransaction = async (req, res) => {
             date
         });
 
-        res.status(500).json({
-            success: false,
-            message: error.message
+        res.status(201).json({
+            success: true,
+            transaction
         });
 
     } catch (error) {
