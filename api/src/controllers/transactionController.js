@@ -59,6 +59,17 @@ const getTransactions = async (req, res) => {
         // Calculate the number of documents to skip for pagination
         const skip = (Number(page) - 1) * Number(limit);
 
+        // Get total count of transactions for the user (and type if provided)
+        const totalTransactions = await Transaction.countDocuments(filter);
+
+        // Calculate total pages based on the total count and limit
+        // math.ceil() is used to round up to the nearest whole number, 
+        // ensuring that any remaining transactions that don't fill a complete page are still accounted for in the total page count.
+        const totalPages = Math.ceil(totalTransactions / Number(limit));
+
+        const hasNextPage = Number(page) < totalPages;
+        const hasPreviousPage = Number(page) > 1;
+
 
         // Get transactions
         const transactions = await Transaction.find(filter) // Filter transactions
@@ -72,6 +83,10 @@ const getTransactions = async (req, res) => {
             page: Number(page),
             limit: Number(limit),
             count: transactions.length,
+            totalTransactions,
+            totalPages,
+            hasNextPage,
+            hasPreviousPage,
             transactions
         });
 
