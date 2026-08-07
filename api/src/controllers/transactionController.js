@@ -1,6 +1,7 @@
 const Transaction = require("../models/Transaction");
 const { create } = require("../models/User");
 const findOrCreateCategory = require("../utils/findOrCreateCategory");
+const findUserTransaction = require("../utils/findUserTransaction");
 
 const createTransaction = async (req, res) => {
 
@@ -111,10 +112,7 @@ const getTransactionById = async (req, res) => {
 
     try {
 
-        const transaction = await Transaction.findOne({
-            _id: req.params.id,
-            user: req.user._id
-        }).populate("category");
+        const transaction = await findUserTransaction(req.params.id, req.user._id);
 
         if (!transaction) {
             return res.status(404).json({
