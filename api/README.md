@@ -41,3 +41,10 @@ const [totalTransactions, transactions] = await Promise.all([
 ```
 
 This is a common optimization you'll see in production Node.js applications because it lets MongoDB handle both queries concurrently. After that, we'll move on to implementing Update and Delete while ensuring users can only modify or remove their own transactions.
+
+---
+
+# Aggregation Pipelines.
+With Aggregation, you tell MongoDB:
+
+"Don't send me every transaction. Calculate the totals first, then send me the result."
