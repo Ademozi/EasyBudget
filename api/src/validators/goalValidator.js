@@ -5,7 +5,7 @@ const createGoalValidation = [
 
     body("name")
         .trim()
-        .notEmpty
+        .notEmpty()
         .withMessage("Goal name is required.")
         .isLength({ max: 50 })
         .withMessage("Goal name must not exceed 50 charaters."),
