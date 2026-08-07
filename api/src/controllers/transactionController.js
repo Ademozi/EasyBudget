@@ -107,6 +107,39 @@ const getTransactions = async (req, res) => {
     }
 };
 
+const getTransactionById = async (req, res) => {
+
+    try {
+
+        const transaction = await Transaction.findOne({
+            _id: req.params.id,
+            user: req.user._id
+        }).populate("category");
+
+        if (!transaction) {
+            return res.status(404).json({
+                success: false,
+                message: "Transaction not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            transaction
+        });
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+};
+
 module.exports = {
     createTransaction,
     getTransactions
