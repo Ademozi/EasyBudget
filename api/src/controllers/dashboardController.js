@@ -77,7 +77,8 @@ const getDashboard = async (req, res) => {
                 totalIncome: financialSummary.totalIncome,
                 totalExpenses: financialSummary.totalExpenses,
                 balance
-            }
+            },
+            recentTransactions
         });
 
     } catch (error) {
