@@ -138,8 +138,56 @@ const getTransactionById = async (req, res) => {
     }
 };
 
+const updateTransaction = async (req, res) => {
+    try {
+
+        const transaction = await findUserTransaction(req.params.id, req.user._id);
+
+        if (!transaction) {
+            return res.status(404).json({
+                success: false,
+                message: "Transaction not found"
+            });
+        }
+
+        const { type, amount, category, description, date } = req.body;
+
+        const categoryDoc = await findOrCreateCategory(
+            req.user._id,
+            category
+        );
+
+        // the nullish coalescing operator (??)
+        transaction.type = type ?? transaction.type;
+        transaction.amount = amount ?? transaction.amount;
+        transaction.category = categoryDoc._id ?? transaction.category;
+        transaction.description = description ?? transaction.description;
+        transaction.date = date ?? transaction.date;
+
+        await transaction.save(); 
+
+        res.status(200).json({
+            success: true,
+            transaction
+        });
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+};
+
+
+
 module.exports = {
     createTransaction,
     getTransactions,
-    getTransactionById
+    getTransactionById,
+    updateTransaction
 };
