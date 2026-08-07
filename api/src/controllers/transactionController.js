@@ -142,5 +142,6 @@ const getTransactionById = async (req, res) => {
 
 module.exports = {
     createTransaction,
-    getTransactions
+    getTransactions,
+    getTransactionById
 };

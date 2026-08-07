@@ -3,13 +3,15 @@ const router = express.Router();
 
 const protect = require("../middleware/authMiddleware");
 
-const { createTransaction, getTransactions } = require("../controllers/transactionController");
+const { createTransaction, getTransactions, getTransactionById  } = require("../controllers/transactionController");
 
-// router.post("/", protect, createTransaction);
-// router.get("/", protect, getTransactions);
 router
     .route("/")
     .post(protect, createTransaction)
     .get(protect, getTransactions);
+
+router
+    .route("/:id")
+    .get(protect, getTransactionById);
 
 module.exports = router;
