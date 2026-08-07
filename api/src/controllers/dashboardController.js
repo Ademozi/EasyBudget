@@ -4,7 +4,8 @@ const getDashboard = async (req, res) => {
     try {
 
         // Aggregation
-        const summary = await Transaction.aggregate([ 
+        const [summary, recentTransactions] = await Promise.all([
+        Transaction.aggregate([ 
             {
                 // filter only the logged-in user's transactions.
                 $match: {
@@ -51,7 +52,13 @@ const getDashboard = async (req, res) => {
                     }
                 }
             }
-         ]);
+         ]),
+
+        Transaction.find({ user: req.user._id })
+            .sort({ date: -1 })
+            .limit(5)
+            .populate("category")
+        ]);
 
         // Because the aggregation returns an array, 
         // we need to check if the first element exists. 
