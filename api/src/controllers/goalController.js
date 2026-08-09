@@ -95,5 +95,6 @@ const getGoals = async (req, res) => {
 };
 
 module.exports = {
-    createGoal
+    createGoal,
+    getGoals
 };
