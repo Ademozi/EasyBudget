@@ -96,7 +96,64 @@ const getGoals = async (req, res) => {
 
 };
 
+const addMoneyToGoal = async (req, res) => {
+
+    try {
+
+        const { amount } = req.body;
+
+        const goal = await Goal.findOne({
+            _id: req.params.id,
+            user: req.user._id
+        });
+
+        goal.savedAmount += Number(amount);
+
+        await goal.save();
+
+        const remainingAmount = Math.max(
+            goal.targetAmount - goal.savedAmount,
+            0
+        );
+
+        const progress = Math.min(
+            (goal.savedAmount / goal.targetAmount) * 100,
+            100
+        );
+
+        const isCompleted =
+            goal.savedAmount >= goal.targetAmount;
+
+        res.status(200).json({
+            success: true,
+            message: "Money added to goal successfully.",
+            goal: {
+                id: goal._id,
+                name: goal.name,
+                targetAmount: goal.targetAmount,
+                savedAmount: goal.savedAmount,
+                remainingAmount,
+                progress: Number(progress.toFixed(2)),
+                deadline: goal.deadline,
+                isCompleted
+            }
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+
+    }
+
+};
+
 module.exports = {
     createGoal,
-    getGoals
+    getGoals,
+    addMoneyToGoal
 };
