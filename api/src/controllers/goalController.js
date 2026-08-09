@@ -1,4 +1,5 @@
 const Goal = require("../models/Goal");
+const formatGoal = require("../utils/formatGoal");
 
 const createGoal = async (req, res) => {
 
@@ -51,32 +52,7 @@ const getGoals = async (req, res) => {
         const goals = await Goal.find({ user: req.user._id })
         .sort({ createdAt: -1 });
 
-        const formattedGoals = goals.map((goal) => {
-
-            const remainingAmount = Math.max(
-                goal.targetAmount - goal.savedAmount,
-                0
-            );
-
-            const progress = Math.min(
-                (goal.savedAmount / goal.targetAmount) * 100,
-                100
-            );
-
-            const isCompleted = goal.savedAmount >= goal.targetAmount;
-
-            return {
-                id: goal._id,
-                name: goal.name,
-                targetAmount: goal.targetAmount,
-                savedAmount: goal.savedAmount,
-                remainingAmount,
-                progress: Number(progress.toFixed(2)),
-                deadline: goal.deadline,
-                isCompleted,
-                createdAt: goal.createdAt
-            };
-        });
+        const formattedGoals = goals.map(formatGoal);
 
         res.status(200).json({
             success: true,
@@ -107,36 +83,23 @@ const addMoneyToGoal = async (req, res) => {
             user: req.user._id
         });
 
+        if (!goal) {
+            return res.status(404).json({
+                success:  false,
+                message: "Goal not found"
+            });
+        }
+
         goal.savedAmount += Number(amount);
 
         await goal.save();
 
-        const remainingAmount = Math.max(
-            goal.targetAmount - goal.savedAmount,
-            0
-        );
-
-        const progress = Math.min(
-            (goal.savedAmount / goal.targetAmount) * 100,
-            100
-        );
-
-        const isCompleted =
-            goal.savedAmount >= goal.targetAmount;
+        
 
         res.status(200).json({
             success: true,
             message: "Money added to goal successfully.",
-            goal: {
-                id: goal._id,
-                name: goal.name,
-                targetAmount: goal.targetAmount,
-                savedAmount: goal.savedAmount,
-                remainingAmount,
-                progress: Number(progress.toFixed(2)),
-                deadline: goal.deadline,
-                isCompleted
-            }
+            goal: formatGoal(goal)
         });
 
     } catch (error) {
