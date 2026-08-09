@@ -21,4 +21,10 @@ const createGoalValidation = [
 
 ];
 
-module.exports = { createGoalValidation };
+const addMoneyValidation = [
+    body("amount")
+        .isFloat({ gt: 0 })
+        .withMessage("Amount must be greter than 0.")
+];
+
+module.exports = { createGoalValidation, addMoneyValidation };
