@@ -63,6 +63,8 @@ const getGoals = async (req, res) => {
                 100
             );
 
+            const isCompleted = goal.savedAmount >= goal.targetAmount;
+
             return {
                 id: goal._id,
                 name: goal.name,
@@ -71,7 +73,7 @@ const getGoals = async (req, res) => {
                 remainingAmount,
                 progress: Number(progress.toFixed(2)),
                 deadline: goal.deadline,
-                isCompleted: goal.isCompleted,
+                isCompleted,
                 createdAt: goal.createdAt
             };
         });
