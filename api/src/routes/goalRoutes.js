@@ -9,6 +9,6 @@ const { createGoal, getGoals, addMoneyToGoal } = require("../controllers/goalCon
 
 router.post("/", protect, createGoalValidation, validate, createGoal);
 router.get("/", protect, getGoals);
-router.patch("/:id/ad-money", protect, addMoneyValidation, validate, addMoneyToGoal);
+router.patch("/:id/add-money", protect, addMoneyValidation, validate, addMoneyToGoal);
 
 module.exports = router;
