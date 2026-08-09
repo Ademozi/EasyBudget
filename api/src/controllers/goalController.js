@@ -115,8 +115,39 @@ const addMoneyToGoal = async (req, res) => {
 
 };
 
+const deleteGoal = async (req, res) => {
+    try {
+        
+        const goal = await Goal.findOneAndDelete({
+            _id: req.params.id,
+            user: req.user._id
+        });
+
+        if (!goal) {
+            return res.status(404).json({
+                success: false,
+                message: "Goal not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Goal deleted successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+};
+
 module.exports = {
     createGoal,
     getGoals,
-    addMoneyToGoal
+    addMoneyToGoal,
+    deleteGoal
 };

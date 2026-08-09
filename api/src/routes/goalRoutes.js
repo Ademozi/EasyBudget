@@ -5,10 +5,11 @@ const protect = require("../middleware/authMiddleware");
 const validate = require("../middleware/validate");
 
 const { createGoalValidation, addMoneyValidation } = require("../validators/goalValidator");
-const { createGoal, getGoals, addMoneyToGoal } = require("../controllers/goalController");
+const { createGoal, getGoals, addMoneyToGoal, deleteGoal } = require("../controllers/goalController");
 
 router.post("/", protect, createGoalValidation, validate, createGoal);
 router.get("/", protect, getGoals);
 router.patch("/:id/add-money", protect, addMoneyValidation, validate, addMoneyToGoal);
+router.delete("/:id", protect, deleteGoal);
 
 module.exports = router;
