@@ -463,19 +463,23 @@ This means the business logic and database do not need to be rebuilt when a mobi
 
 # 🤝 Contributing
 
-This project is primarily a personal project, but suggestions and improvements are welcome.
+This project is primarily a personal and educational project.
+Suggestions, bug reports, and improvements are welcome.
 
-If you want to contribute:
+If you would like to contribute:
 
 1. Fork the repository.
 2. Create a feature branch.
 3. Make your changes.
 4. Commit your changes.
-5. Push the branch.
+5. Push your branch.
 6. Open a Pull Request.
+
+All contributions are subject to review and may be accepted or rejected at the project owner's discretion.
 
 ---
 
 # 📄 License
 
 This project is currently intended for personal and educational use.
+No license has been granted for copying, modifying, or redistributing this software.
