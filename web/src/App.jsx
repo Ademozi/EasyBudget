@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import api from './services/api';
+import Login from "./pages/Login";
 
 function Dashboard() {
 
@@ -31,11 +32,6 @@ function Dashboard() {
 
 }
 
-function Login() {
-    return (
-        <h1>Login</h1>
-    );
-}
 
 function Register() {
     return (
