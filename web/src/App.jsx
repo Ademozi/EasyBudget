@@ -1,9 +1,34 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import api from './services/api';
 
 function Dashboard() {
-    return (
-        <h1>Dashboard</h1>
-    );
+
+  useEffect(() => {
+
+    const testApi = async () => {
+
+      try {
+
+        const response = await api.get("/");
+
+        console.log(response.data);
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    };
+
+    testApi();
+
+  }, []);
+
+
+    return <h1>Dashboard</h1>;
+
 }
 
 function Login() {
