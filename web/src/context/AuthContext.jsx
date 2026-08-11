@@ -17,15 +17,18 @@ export const AuthProvider = ({ children }) => {
     // Login
     const login = async (email, password) => {
 
+        // Send login request to the backend
         const response = await api.post("/auth/login", {
             email,
             password
         });
 
+        // If login is successful, store the token in localStorage and update the user state
         const { token, user } = response.data;
 
         localStorage.setItem("token", token);
 
+        // Update the user state with the logged-in user's information
         setUser(user);
 
         return user;
@@ -34,6 +37,7 @@ export const AuthProvider = ({ children }) => {
     // Register
     const register = async (username, email, password) => {
 
+        // Send registration request to the backend
         const response = await api.post("/auth/register", {
             username,
             email,
@@ -44,6 +48,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     // Restore user session when the app starts
+    // This runs when AuthProvider is initially loaded.
     useEffect(() => {
 
         const restoreSession = async () => {
