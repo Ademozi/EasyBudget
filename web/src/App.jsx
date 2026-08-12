@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import api from './services/api';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedRoute from './components/ProtectedRoute';
 
 function Dashboard() {
 
@@ -50,9 +51,18 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Dashboard />} />
+                {/* Public pages */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+
+                {/* Private pages */}
+                <Route path="/" element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    } 
+                />
+
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/goals" element={<Goals />} />
             </Routes>
