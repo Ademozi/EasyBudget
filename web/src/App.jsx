@@ -4,35 +4,9 @@ import api from './services/api';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoute from './components/ProtectedRoute';
-
-function Dashboard() {
-
-  useEffect(() => {
-
-    const testApi = async () => {
-
-      try {
-
-        const response = await api.get("/");
-
-        console.log(response.data);
-
-      } catch (error) {
-
-        console.error(error);
-
-      }
-
-    };
-
-    testApi();
-
-  }, []);
+import Dashboard from './pages/Dashboard';
 
 
-    return <h1>Dashboard</h1>;
-
-}
 
 function Transactions() {
     return (
