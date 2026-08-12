@@ -47,6 +47,11 @@ export const AuthProvider = ({ children }) => {
         return response.data;
     };
 
+    const logout = () => {
+        localStorage.removeItem("token");
+        setUser(null);
+    };
+
     // Restore user session when the app starts
     // This runs when AuthProvider is initially loaded.
     useEffect(() => {
@@ -92,6 +97,7 @@ export const AuthProvider = ({ children }) => {
                 setUser,
                 login,
                 register,
+                logout,
                 loading
             }}
         >
