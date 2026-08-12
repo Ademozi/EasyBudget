@@ -21,6 +21,7 @@ const Register = () => {
         try {
             await register(username, email, password);
 
+            // If registration is successful, navigate the user to the login page.
             navigate("/login");
 
         } catch (error) {
