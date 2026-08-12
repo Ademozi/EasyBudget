@@ -76,11 +76,22 @@ const Dashboard = () => {
 
                 <h2>Recent Transactions</h2>
 
-                <p>No transactions yet.</p>
 
-                <h2>Savings Goals</h2>
+                {/* "For every transaction returned by the backend, create this piece of UI." */}
+                {dashboard?.recentTransactions?.map((transaction) => (
+                    <div key={transaction.id}>
 
-                <p>No goals yet.</p>
+                        <p>{transaction.category.name}</p>
+                        
+                        <p>{transaction.description}</p>
+                        
+                        <p>
+                            {transaction.type === "expense" ? "-" : "+"}
+                            {transaction.amount} DA
+                        </p>
+
+                    </div>
+                ))}
 
             </main>
             
