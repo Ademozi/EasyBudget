@@ -63,8 +63,17 @@ function App() {
                     } 
                 />
 
-                <Route path="/transactions" element={<Transactions />} />
-                <Route path="/goals" element={<Goals />} />
+                <Route path="/transactions" element={
+                    <ProtectedRoute>
+                        <Transactions />
+                    </ProtectedRoute>
+                } />
+
+                <Route path="/goals" element={
+                    <ProtectedRoute>
+                        <Goals />
+                    </ProtectedRoute>
+                } />
             </Routes>
         </BrowserRouter>
     );
