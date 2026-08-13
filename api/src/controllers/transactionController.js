@@ -60,16 +60,6 @@ const getTransactions = async (req, res) => {
         // Calculate the number of documents to skip for pagination
         const skip = (Number(page) - 1) * Number(limit);
 
-        
-        // Calculate total pages based on the total count and limit
-        // math.ceil() is used to round up to the nearest whole number, 
-        // ensuring that any remaining transactions that don't fill a complete page are still accounted for in the total page count.
-        const totalPages = Math.ceil(totalTransactions / Number(limit));
-
-        const hasNextPage = Number(page) < totalPages;
-        const hasPreviousPage = Number(page) > 1;
-
-
         // Optimization: Instead of making two separate database calls (one for counting and one for fetching),
         // Since they don't depend on each other, we can run them at the same time using Promise.all(), 
         // which reduces the total response time.
@@ -83,6 +73,16 @@ const getTransactions = async (req, res) => {
                 .skip(skip)
                 .limit(Number(limit))
         ]);
+
+        
+        // Calculate total pages based on the total count and limit
+        // math.ceil() is used to round up to the nearest whole number, 
+        // ensuring that any remaining transactions that don't fill a complete page are still accounted for in the total page count.
+        const totalPages = Math.ceil(totalTransactions / Number(limit));
+
+        const hasNextPage = Number(page) < totalPages;
+        const hasPreviousPage = Number(page) > 1;
+
 
         res.status(200).json({
             success: true,
