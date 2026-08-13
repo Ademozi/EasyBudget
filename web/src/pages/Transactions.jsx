@@ -7,6 +7,8 @@ const Transactions = () => {
 
     const [transactions, setTransactions] = useState([]);
     const [type, setType] = useState("");
+    const [page, setPage] = useState(1);
+    const [pagination, setPagination] = useState(null);
 
     useEffect(() => {
 
@@ -17,13 +19,16 @@ const Transactions = () => {
                 // The user ID is added automaticallyby axios interceptor
                 const response = await api.get("/transactions", {
                     params: {
-                        type: type || undefined
+                        type: type || undefined,
+                        page: page,
+                        limit: 5
                     }
                 });
 
                 console.log(response.data);
 
                 setTransactions(response.data.transactions);
+                setPagination(response.data);
 
             } catch (error) {
 
@@ -37,7 +42,7 @@ const Transactions = () => {
 
         fetchTransactions();
 
-    }, [type]);
+    }, [type, page]);
 
     return (
         <div>
@@ -47,15 +52,24 @@ const Transactions = () => {
             <main>
                 <div>
 
-                    <button onClick={() => setType("")}>
+                    <button onClick={() => {
+                            setType("");
+                            setPage(1);
+                        }}>
                         All
                     </button>
 
-                    <button onClick={() => setType("income")}>
+                    <button onClick={() => {
+                            setType("income");
+                            setPage(1);
+                        }}>
                         Income
                     </button>
 
-                    <button onClick={() => setType("expense")}>
+                    <button onClick={() => {
+                            setType("expense");
+                            setPage(1);
+                        }}>
                         Expense
                     </button>
 
@@ -85,7 +99,27 @@ const Transactions = () => {
                     </div>
                 ))}
 
+                <div>
 
+                    <button
+                        disabled={!pagination?.hasPreviousPage}
+                        onClick={() => setPage(page - 1)}
+                    >
+                        Previous
+                    </button>
+
+                    <span>
+                        Page {pagination?.page ?? 1} of {pagination?.totalPages ?? 1}
+                    </span>
+
+                    <button
+                        disabled={!pagination?.hasNextPage}
+                        onClick={() => setPage(page + 1)}
+                    >
+                        Next
+                    </button>
+
+                </div>
 
             </main>
 
