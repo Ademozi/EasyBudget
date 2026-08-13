@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
 import api from "../services/api";
 import Navbar from '../components/Navbar';
 
 
 const Transactions = () => {
-
-    const { user } = useAuth();
 
     const [transactions, setTransactions] = useState([]);
 
@@ -19,7 +16,9 @@ const Transactions = () => {
                 // The user ID is added automaticallyby axios interceptor
                 const response = await api.get("/transactions");
 
-                setTransactions(response.data);
+                console.log(response.data);
+
+                setTransactions(response.data.transactions);
 
             } catch (error) {
 
@@ -42,11 +41,31 @@ const Transactions = () => {
 
             <main>
 
-                <h1>EasyBudget</h1>
+                <h1>Transactions</h1>
 
-                <h2>{user?.username} Transactions</h2>
+                {transactions.map((transaction) => (
+                    <div key={transaction.id}>
 
-                
+                        <p>
+                            {transaction.category.name}
+                        </p>
+
+                        <p>
+                            {transaction.category.description}
+                        </p>
+
+                        <p>
+                            {transaction.type === "expense"
+                            ? "?"
+                            : "+"}
+
+                            {transaction.amount} DA
+                        </p>
+
+                    </div>
+                ))}
+
+
 
             </main>
 
@@ -54,3 +73,5 @@ const Transactions = () => {
     );
 
 };
+
+export default Transactions;
