@@ -15,9 +15,8 @@ const Dashboard = () => {
 
             try {
 
+                // The user ID is added automaticallyby axios interceptor
                 const response = await api.get("/dashboard");
-
-                console.log("Dashboard response:", response.data);
 
                 setDashboard(response.data);
 
