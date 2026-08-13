@@ -5,14 +5,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
+import Transactions from './pages/Transactions';
 
-
-
-function Transactions() {
-    return (
-        <h1>Transactions</h1>
-    );
-}
 
 function Goals() {
     return (

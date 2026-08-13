@@ -56,7 +56,7 @@ const Transactions = () => {
 
                         <p>
                             {transaction.type === "expense"
-                            ? "?"
+                            ? "-"
                             : "+"}
 
                             {transaction.amount} DA
