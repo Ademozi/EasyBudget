@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';
 const Transactions = () => {
 
     const [transactions, setTransactions] = useState([]);
+    const [type, setType] = useState("");
 
     useEffect(() => {
 
@@ -14,7 +15,11 @@ const Transactions = () => {
             try {
 
                 // The user ID is added automaticallyby axios interceptor
-                const response = await api.get("/transactions");
+                const response = await api.get("/transactions", {
+                    params: {
+                        type: type || undefined
+                    }
+                });
 
                 console.log(response.data);
 
@@ -32,7 +37,7 @@ const Transactions = () => {
 
         fetchTransactions();
 
-    }, []);
+    }, [type]);
 
     return (
         <div>
@@ -40,6 +45,21 @@ const Transactions = () => {
             <Navbar />
 
             <main>
+                <div>
+
+                    <button onClick={() => setType("")}>
+                        All
+                    </button>
+
+                    <button onClick={() => setType("income")}>
+                        Income
+                    </button>
+
+                    <button onClick={() => setType("expense")}>
+                        Expense
+                    </button>
+
+                </div>
 
                 <h1>Transactions</h1>
 
