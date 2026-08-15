@@ -51,6 +51,26 @@ const Transactions = () => {
 
     }, [type, page]);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+
+            const response = await api.post("/transactions", {
+                type: formData.type,
+                amount: formData.amount,
+                category: formData.category,
+                description: formData.description,
+                date: formData.date,
+            });
+
+            console.log("Transaction created:", response.data);
+
+        } catch (error) {
+            console.error("Failed to create transaction:", error);
+        }
+    }
+
     return (
         <div>
 
@@ -58,7 +78,7 @@ const Transactions = () => {
 
             <main>
 
-                <form>
+                <form onSubmit={handleSubmit}>
 
                     <h2>Add Transaction</h2>
 
