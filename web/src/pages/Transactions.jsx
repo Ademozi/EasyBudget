@@ -18,6 +18,7 @@ const Transactions = () => {
     });
 
     const [message, setMessage] = useState(""); 
+    const [categories, setCategories] = useState([]);
 
     const fetchTransactions = async () => {
 
@@ -47,9 +48,28 @@ const Transactions = () => {
 
         };
 
+        const fetchCategories = async () => {
+
+            try {
+
+                const response = await api.get("/categories");
+
+                setCategories(response.data.categories);
+
+            } catch (error) {
+
+                console.error(
+                    "Failed to load categories",
+                    error
+                );
+            }
+
+        };
+
     useEffect(() => {
 
         fetchTransactions();
+        fetchCategories();
 
     }, [type, page]);
 
@@ -80,6 +100,7 @@ const Transactions = () => {
             console.log("Transaction created:", response.data);
 
             await fetchTransactions(); // Refresh the transactions list after adding a new transaction
+            fetchCategories(); // Refresh the categories list after adding a new transaction
 
 
         } catch (error) {
