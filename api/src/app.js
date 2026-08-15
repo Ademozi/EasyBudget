@@ -20,5 +20,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/goals", goalRoutes);
+app.use("/api/categories", categoryRoutes);
 
 module.exports = app;

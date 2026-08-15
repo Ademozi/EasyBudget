@@ -227,6 +227,15 @@ GET /api/transactions?page=1&limit=20
 
 ---
 
+## Categories
+
+| Method | Endpoint                | Description         | Protected |
+| ------ | ----------------------- | ------------------- | --------- |
+| GET    | `/api/categories`       | Get categories      | ✅        |
+
+
+---
+
 ## Dashboard
 
 | Method | Endpoint         | Description            | Protected |
