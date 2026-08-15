@@ -70,7 +70,13 @@ const Transactions = () => {
                         // then updating the type property with the new value from the select input. 
                         // This way, we are keeping the other properties of formData intact while only changing the type.
                             value={formData.type}
-                            onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                            onChange={(e) => 
+                                setFormData({ 
+                                    // ...formData means Keep everything that was already there. 
+                                    // and replaces only the type
+                                    ...formData, 
+                                    type: e.target.value 
+                            })}
                          >
                             <option value="expense">Expense</option>
                             <option value="income">Income</option>
@@ -99,6 +105,13 @@ const Transactions = () => {
                         <input
                             type="text"
                             placeholder="Enter category"
+                            value={formData.category}
+                            onChange={(e) => 
+                                setFormData({
+                                    ...formData,
+                                    category: e.target.value
+                                })
+                            }
                         />
                     </div>
 
@@ -108,6 +121,13 @@ const Transactions = () => {
                         <input
                             type="text"
                             placeholder="Enter description"
+                            value={formData.description}
+                            onChange={(e) => 
+                                setFormData({
+                                    ...formData,
+                                    description: e.target.value
+                                })
+                            }
                         />
                     </div>
 
@@ -116,6 +136,13 @@ const Transactions = () => {
 
                         <input
                             type="date"
+                            value={formData.date}
+                            onChange={(e) => 
+                                setFormData({
+                                    ...formData, 
+                                    date: e.target.value
+                                })
+                            }
                         />
                     </div>
 
