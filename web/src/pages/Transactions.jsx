@@ -17,9 +17,9 @@ const Transactions = () => {
         date: ""
     });
 
-    useEffect(() => {
+    const [message, setMessage] = useState(""); 
 
-        const fetchTransactions = async () => {
+    const fetchTransactions = async () => {
 
             try {
 
@@ -47,6 +47,8 @@ const Transactions = () => {
 
         };
 
+    useEffect(() => {
+
         fetchTransactions();
 
     }, [type, page]);
@@ -58,18 +60,35 @@ const Transactions = () => {
 
             const response = await api.post("/transactions", {
                 type: formData.type,
-                amount: formData.amount,
+                amount: Number(formData.amount),
                 category: formData.category,
                 description: formData.description,
                 date: formData.date,
             });
 
+            setMessage("Transaction created successfully!");
+
+            // Clear the form
+            setFormData({
+                type: "expense",
+                amount: "",
+                category: "",
+                description: "",
+                date: ""
+            });
+
             console.log("Transaction created:", response.data);
+
+            await fetchTransactions(); // Refresh the transactions list after adding a new transaction
+
 
         } catch (error) {
             console.error("Failed to create transaction:", error);
+
+            setMessage("Failed to add transaction.");
         }
-    }
+        
+    };
 
     return (
         <div>
@@ -77,6 +96,8 @@ const Transactions = () => {
             <Navbar />
 
             <main>
+
+                {message && <p>{message}</p>}
 
                 <form onSubmit={handleSubmit}>
 
