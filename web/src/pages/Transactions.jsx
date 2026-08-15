@@ -9,6 +9,13 @@ const Transactions = () => {
     const [type, setType] = useState("");
     const [page, setPage] = useState(1);
     const [pagination, setPagination] = useState(null);
+    const [formData, setFormData] = useState({
+        type: "expense",
+        amount: "",
+        category: "",
+        description: "",
+        date: ""
+    });
 
     useEffect(() => {
 
@@ -50,6 +57,74 @@ const Transactions = () => {
             <Navbar />
 
             <main>
+
+                <form>
+
+                    <h2>Add Transaction</h2>
+
+                    <div>
+                        <label>Type</label>
+
+                        <select
+                        // ...formData means that we are spreading the existing formData object and 
+                        // then updating the type property with the new value from the select input. 
+                        // This way, we are keeping the other properties of formData intact while only changing the type.
+                            value={formData.type}
+                            onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                         >
+                            <option value="expense">Expense</option>
+                            <option value="income">Income</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Amount</label>
+
+                        <input
+                            type="number"
+                            placeholder="Enter amount"
+                            value={formData.amount}
+                            onChange={(e) => 
+                                setFormData({
+                                    ...formData,
+                                    amount: e.target.value
+                                })
+                            }
+                        />
+                    </div>
+
+                    <div>
+                        <label>Category</label>
+
+                        <input
+                            type="text"
+                            placeholder="Enter category"
+                        />
+                    </div>
+
+                    <div>
+                        <label>Description</label>
+
+                        <input
+                            type="text"
+                            placeholder="Enter description"
+                        />
+                    </div>
+
+                    <div>
+                        <label>Date</label>
+
+                        <input
+                            type="date"
+                        />
+                    </div>
+
+                    <button type="submit">
+                        Add Transaction
+                    </button>
+
+                </form>
+
                 <div>
 
                     <button onClick={() => {
