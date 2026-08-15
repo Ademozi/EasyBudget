@@ -19,6 +19,7 @@ const Transactions = () => {
 
     const [message, setMessage] = useState(""); 
     const [categories, setCategories] = useState([]);
+    const [categoryMode, setCategoryMode] = useState("");
 
     const fetchTransactions = async () => {
 
@@ -111,6 +112,21 @@ const Transactions = () => {
         
     };
 
+    const toggleCategoryMode = () => {
+        if (categoryMode === "existing") {
+            setCategoryMode("new");
+        } else {
+            setCategoryMode("existing");
+        }
+
+        // When the user switches from: Select existing category to: Create new category
+        // we want to clear whatever category was selected before.
+        setFormData({
+            ...formData,
+            category: ""
+        });
+    };
+
     return (
         <div>
 
@@ -164,17 +180,51 @@ const Transactions = () => {
                     <div>
                         <label>Category</label>
 
-                        <input
-                            type="text"
-                            placeholder="Enter category"
-                            value={formData.category}
-                            onChange={(e) => 
-                                setFormData({
-                                    ...formData,
-                                    category: e.target.value
-                                })
-                            }
-                        />
+                        {categoryMode === "existing" ? (
+                            <select
+                                value={formData.category}
+                                onChange={(e) => {
+                                    setFormData({
+                                        ...formData,
+                                        category: e.target.value
+                                    })
+                                }}
+                            >
+
+                                <option value="">Select a Category</option>
+
+                                {categories.map((category) => (
+                                    <option
+                                        key={category._id}
+                                        value={category.name}
+                                    >
+                                        {category.name}
+                                    </option>
+                                ))}
+
+                            </select>
+                        ) : (
+                            <input
+                                type="text"
+                                placeholder="Enter new category"
+                                value={formData.category}
+                                onChange={(e) => 
+                                    setFormData({
+                                        ...formData,
+                                        category: e.target.value
+                                    })
+                                }
+                            />
+                        )}
+
+                        <button
+                            type="button"
+                            onClick={toggleCategoryMode}
+                        >
+                            {categoryMode === "existing"
+                            ? "Create new category"
+                            : "Choose existing category"}
+                        </button>
                     </div>
 
                     <div>
