@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const goalRoutes = require("./routes/goalRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 app.use(cors());
 app.use(express.json());
