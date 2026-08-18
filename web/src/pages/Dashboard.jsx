@@ -1,3 +1,15 @@
+import {
+    Container,
+    Typography,
+    Grid,
+    Card,
+    CardContent,
+    Box,
+    Button
+} from "@mui/material";
+
+import { Link } from "react-router-dom";
+
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
@@ -15,7 +27,7 @@ const Dashboard = () => {
 
             try {
 
-                // The user ID is added automaticallyby axios interceptor
+                // The user ID is added automatically by axios interceptor
                 const response = await api.get("/dashboard");
 
                 setDashboard(response.data);
@@ -34,67 +46,188 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div>
-
+        <>
             <Navbar />
 
-            <main>
+            <Container maxWidth="lg">
 
-                <h1>EasyBudget</h1>
+                {/* Header */}
+                <Box sx={{ mt: 4, mb: 4 }}>
 
-                <p>Welcome, {user?.username}</p>
+                    <Typography variant="h4">
+                        EasyBudget
+                    </Typography>
 
-                <h2>Balance</h2>
+                    <Typography
+                        variant="body1"
+                        color="text.secondary"
+                    >
+                        Welcome, {user?.username}
+                    </Typography>
 
-                <p>
-                    {dashboard?.summary?.balance ?? 0} DA
-                </p>
-
-                <div>
-
-                    <div>
-
-                        <h3>Income</h3>
-
-                        <p>
-                            {dashboard?.summary?.totalIncome ?? 0} DA
-                        </p>
-
-                    </div>
-
-                    <div>
-
-                        <h3>Expenses</h3>
-
-                        <p>
-                            {dashboard?.summary?.totalExpenses ?? 0} DA
-                        </p>
-
-                    </div>
-                </div>
-
-                <h2>Recent Transactions</h2>
+                </Box>
 
 
-                {/* "For every transaction returned by the backend, create this piece of UI." */}
-                {dashboard?.recentTransactions?.map((transaction) => (
-                    <div key={transaction.id}>
+                {/* Balance */}
+                <Card sx={{ mb: 3 }}>
 
-                        <p>{transaction.category.name}</p>
-                        
-                        <p>{transaction.description}</p>
-                        
-                        <p>
-                            {transaction.type === "expense" ? "-" : "+"}
-                            {transaction.amount} DA
-                        </p>
+                    <CardContent>
 
-                    </div>
-                ))}
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                        >
+                            Balance
+                        </Typography>
 
-            </main>
-            
-        </div>
+                        <Typography variant="h4">
+                            {dashboard?.summary?.balance ?? 0} DA
+                        </Typography>
+
+                    </CardContent>
+
+                </Card>
+
+
+                {/* Income + Expenses */}
+                <Grid container spacing={3}>
+
+                    <Grid size={{ xs: 12, md: 6 }}>
+
+                        <Card>
+
+                            <CardContent>
+
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    Income
+                                </Typography>
+
+                                <Typography variant="h5">
+                                    {dashboard?.summary?.totalIncome ?? 0} DA
+                                </Typography>
+
+                            </CardContent>
+
+                        </Card>
+
+                    </Grid>
+
+
+                    <Grid size={{ xs: 12, md: 6 }}>
+
+                        <Card>
+
+                            <CardContent>
+
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    Expenses
+                                </Typography>
+
+                                <Typography variant="h5">
+                                    {dashboard?.summary?.totalExpenses ?? 0} DA
+                                </Typography>
+
+                            </CardContent>
+
+                        </Card>
+
+                    </Grid>
+
+                </Grid>
+
+
+                {/* Recent Transactions */}
+                <Typography
+                    variant="h5"
+                    sx={{ mt: 5, mb: 2 }}
+                >
+                    Recent Transactions
+                </Typography>
+
+
+                <Card>
+
+                    <CardContent>
+
+                        {dashboard?.recentTransactions?.length === 0 ? (
+
+                            <Typography color="text.secondary">
+                                No transactions yet.
+                            </Typography>
+
+                        ) : (
+
+                            dashboard?.recentTransactions?.map(
+                                (transaction) => (
+
+                                    <Box
+                                        key={transaction._id}
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                            py: 2,
+                                            borderBottom: "1px solid #eee"
+                                        }}
+                                    >
+
+                                        <Box>
+
+                                            <Typography>
+                                                {transaction.category.name}
+                                            </Typography>
+
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                            >
+                                                {transaction.description}
+                                            </Typography>
+
+                                        </Box>
+
+
+                                        <Typography>
+                                            {transaction.type === "expense"
+                                                ? "-"
+                                                : "+"}
+
+                                            {transaction.amount} DA
+                                        </Typography>
+
+                                    </Box>
+
+                                )
+                            )
+
+                        )}
+
+                    </CardContent>
+
+                </Card>
+
+
+                {/* View transactions button */}
+                <Box sx={{ mt: 3, mb: 4 }}>
+
+                    <Button
+                        variant="contained"
+                        component={Link}
+                        to="/transactions"
+                    >
+                        View All Transactions
+                    </Button>
+
+                </Box>
+
+            </Container>
+        </>
     );
 };
 

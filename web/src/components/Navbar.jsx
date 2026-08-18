@@ -1,35 +1,54 @@
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    Box
+} from "@mui/material";
+
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-// Link changes the page route without doing a full browser refresh.
 
 const Navbar = () => {
 
-    const { user, logout } = useAuth();
-
     return (
-        <nav>
-            <Link to="/">
-                EasyBudget
-            </Link>
+        <AppBar position="static">
 
-            <div>
-                <span>
-                    {user?.username}
-                </span>
+            <Toolbar>
 
-                <Link to="/transactions">
-                    Transactions
-                </Link>
+                <Typography
+                    variant="h6"
+                    sx={{ flexGrow: 1 }}
+                >
+                    EasyBudget
+                </Typography>
 
-                <Link to="/goals">
-                    Goals
-                </Link>
+                <Box>
+                    <Button
+                        color="inherit"
+                        component={Link}
+                        to="/"
+                    >
+                        Dashboard
+                    </Button>
 
-                <button onClick={logout}>
-                    Logout
-                </button>
-            </div>
-        </nav>
+                    <Button
+                        color="inherit"
+                        component={Link}
+                        to="/transactions"
+                    >
+                        Transactions
+                    </Button>
+
+                    <Button
+                        color="inherit"
+                    >
+                        Logout
+                    </Button>
+                </Box>
+
+            </Toolbar>
+
+        </AppBar>
     );
 };
 
