@@ -129,6 +129,13 @@ const Transactions = () => {
 
     const handleDelete = async (id) => {
 
+        // Confirmation of Delete
+        const confirmed = window.confirm("Are you sure you want to delete this transaction?");
+
+        if (!confirmed) {
+            return; // Exit the function if the user cancels the deletion
+        }
+
         try {
 
             await api.delete(`/transactions/${id}`);
