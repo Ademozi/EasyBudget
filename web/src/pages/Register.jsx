@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
+import {
+    Container,
+    Box,
+    Card,
+    CardContent,
+    Typography,
+    TextField,
+    Button,
+    Alert
+} from "@mui/material";
 
 const Register = () => {
 
@@ -40,44 +51,130 @@ const Register = () => {
     };
 
     return (
-        <div>
+        <Container maxWidth="sm">
 
-            <h1>Create Account</h1>
+            <Box
+                sx={{
+                    minHeight: "100vh",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}
+            >
 
-            {error && (
-                <p>{error}</p>
-            )}
+                <Card
+                    sx={{
+                        width: "100%",
+                        maxWidth: 450
+                    }}
+                >
 
-            <form onSubmit={handleSubmit}>
+                    <CardContent sx={{ p: 4 }}>
 
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+                        <Typography
+                            variant="h4"
+                            align="center"
+                            sx={{ mb: 1 }}
+                        >
+                            EasyBudget
+                        </Typography>
 
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                        <Typography
+                            variant="body1"
+                            color="text.secondary"
+                            align="center"
+                            sx={{ mb: 4 }}
+                        >
+                            Create your account
+                        </Typography>
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
 
-                <button type="submit">
-                    Register
-                </button>
+                        {error && (
+                            <Alert
+                                severity="error"
+                                sx={{ mb: 2 }}
+                            >
+                                {error}
+                            </Alert>
+                        )}
 
-            </form>
 
-        </div>
+                        <Box
+                            component="form"
+                            onSubmit={handleSubmit}
+                        >
+
+                            <TextField
+                                fullWidth
+                                type="text"
+                                label="Username"
+                                value={username}
+                                onChange={(e) =>
+                                    setUsername(e.target.value)
+                                }
+                                sx={{ mb: 2 }}
+                            />
+
+
+                            <TextField
+                                fullWidth
+                                type="email"
+                                label="Email"
+                                value={email}
+                                onChange={(e) =>
+                                    setEmail(e.target.value)
+                                }
+                                sx={{ mb: 2 }}
+                            />
+
+
+                            <TextField
+                                fullWidth
+                                type="password"
+                                label="Password"
+                                value={password}
+                                onChange={(e) =>
+                                    setPassword(e.target.value)
+                                }
+                                sx={{ mb: 3 }}
+                            />
+
+
+                            <Button
+                                fullWidth
+                                type="submit"
+                                variant="contained"
+                                size="large"
+                            >
+                                Register
+                            </Button>
+
+                        </Box>
+
+
+                        <Typography
+                            align="center"
+                            sx={{ mt: 3 }}
+                        >
+                            Already have an account?{" "}
+
+                            <Button
+                                component={Link}
+                                to="/login"
+                                variant="text"
+                            >
+                                Login
+                            </Button>
+
+                        </Typography>
+
+                    </CardContent>
+
+                </Card>
+
+            </Box>
+
+        </Container>
     );
 };
 
