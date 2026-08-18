@@ -127,6 +127,26 @@ const Transactions = () => {
         });
     };
 
+    const handleDelete = async (id) => {
+
+        try {
+
+            await api.delete(`/transactions/${id}`);
+
+            //setMessage("Transaction deleted successfully!");
+
+            // Refresh the transactions list after deleting a transaction
+            await fetchTransactions();
+
+        } catch (error) {
+
+            console.error("Failed to delete transaction:", error);
+
+            //setMessage("Failed to delete transaction.");
+        }
+
+    };
+
     return (
         <div>
 
@@ -292,14 +312,14 @@ const Transactions = () => {
                 <h1>Transactions</h1>
 
                 {transactions.map((transaction) => (
-                    <div key={transaction.id}>
+                    <div key={transaction._id}>
 
                         <p>
                             {transaction.category.name}
                         </p>
 
                         <p>
-                            {transaction.category.description}
+                            {transaction.description}
                         </p>
 
                         <p>
@@ -309,6 +329,12 @@ const Transactions = () => {
 
                             {transaction.amount} DA
                         </p>
+
+                        <button
+                            onClick={() => handleDelete(transaction._id)}
+                        >
+                            Delete
+                        </button>
 
                     </div>
                 ))}
