@@ -199,8 +199,8 @@ This prevents users from accessing or modifying resources belonging to another u
 
 ## Authentication
 
-| Method | Endpoint             | Description         | Protected |
-| ------ | -------------------- | ------------------- | --------- |
+| Method | Endpoint             | Description         | Protected  |
+| ------ | -------------------- | ------------------- | ---------  |
 | POST   | `/api/auth/register` | Register a new user | ❌         |
 | POST   | `/api/auth/login`    | Login               | ❌         |
 | GET    | `/api/auth/me`       | Get current user    | ✅         |
@@ -209,12 +209,12 @@ This prevents users from accessing or modifying resources belonging to another u
 
 ## Transactions
 
-| Method | Endpoint                | Description         | Protected |
-| ------ | ----------------------- | ------------------- | --------- |
+| Method | Endpoint                | Description         | Protected  |
+| ------ | ----------------------- | ------------------- | ---------  |
 | POST   | `/api/transactions`     | Create transaction  | ✅         |
 | GET    | `/api/transactions`     | Get transactions    | ✅         |
 | GET    | `/api/transactions/:id` | Get one transaction | ✅         |
-| PATCH  | `/api/transactions/:id` | Update transaction  | ✅         |
+| Put    | `/api/transactions/:id` | Update transaction  | ✅         |
 | DELETE | `/api/transactions/:id` | Delete transaction  | ✅         |
 
 Transactions support filtering and pagination.
@@ -238,8 +238,8 @@ GET /api/transactions?page=1&limit=20
 
 ## Dashboard
 
-| Method | Endpoint         | Description            | Protected |
-| ------ | ---------------- | ---------------------- | --------- |
+| Method | Endpoint         | Description            | Protected  |
+| ------ | ---------------- | ---------------------- | ---------  |
 | GET    | `/api/dashboard` | Get financial overview | ✅         |
 
 The dashboard provides aggregated information such as:
