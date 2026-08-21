@@ -214,7 +214,7 @@ This prevents users from accessing or modifying resources belonging to another u
 | POST   | `/api/transactions`     | Create transaction  | ✅         |
 | GET    | `/api/transactions`     | Get transactions    | ✅         |
 | GET    | `/api/transactions/:id` | Get one transaction | ✅         |
-| Put    | `/api/transactions/:id` | Update transaction  | ✅         |
+| PUT    | `/api/transactions/:id` | Update transaction  | ✅         |
 | DELETE | `/api/transactions/:id` | Delete transaction  | ✅         |
 
 Transactions support filtering and pagination.
