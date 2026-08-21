@@ -38,6 +38,7 @@ const Transactions = () => {
     const [message, setMessage] = useState("");
     const [categories, setCategories] = useState([]);
     const [categoryMode, setCategoryMode] = useState("existing");
+    const [editingId, setEditingId] = useState(null);
 
 
     // -----------------------------
@@ -113,16 +114,31 @@ const Transactions = () => {
 
         try {
 
-            const response = await api.post("/transactions", {
+            const data = {
                 type: formData.type,
                 amount: Number(formData.amount),
                 category: formData.category,
                 description: formData.description,
                 date: formData.date
-            });
+            };
 
-            setMessage("Transaction created successfully!");
+            if (editingId) {
 
+                await api.put(`/transactions/${editingId}`, data);
+
+                setMessage("Transaction updated successfully!");
+            } else {
+
+                await api.post("/transactions", data);
+
+                setMessage("Transaction created successfully!");
+
+            }
+
+            // Exit edit mode after updating
+            setEditingId(null);
+
+            // Clear form data
             setFormData({
                 type: "expense",
                 amount: "",
@@ -131,8 +147,9 @@ const Transactions = () => {
                 date: ""
             });
 
+            // Refresh transactions and categories
             await fetchTransactions();
-            fetchCategories();
+            await fetchCategories();
 
         } catch (error) {
 
@@ -141,7 +158,7 @@ const Transactions = () => {
                 error
             );
 
-            setMessage("Failed to add transaction.");
+            setMessage("Failed to save transaction.");
         }
     };
 
@@ -194,6 +211,25 @@ const Transactions = () => {
         }
     };
 
+    const handleEdit = (transaction) => {
+
+        setEditingId(transaction);
+
+        setFormData({
+            type: transaction.type,
+            amount: transaction.amount,
+            category: transaction.category.name,
+            description: transaction.description,
+            date: transaction.date.slice(0, 10) // Format date to YYYY-MM-DD
+        });
+
+        setCategoryMode("existing");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
 
     return (
         <>
@@ -251,7 +287,9 @@ const Transactions = () => {
                             variant="h5"
                             sx={{ mb: 3 }}
                         >
-                            Add Transaction
+                            {editingId 
+                                ? "Edit Transaction" 
+                                : "Add Transaction"}
                         </Typography>
 
 
@@ -451,8 +489,34 @@ const Transactions = () => {
                                     type="submit"
                                     variant="contained"
                                 >
-                                    Add Transaction
+                                    {editingId
+                                        ? "Update Transaction"
+                                        : "Add Transaction"}
                                 </Button>
+
+                                {editingId && (
+                                    <Button
+                                        type="button"
+                                        variant="text"
+                                        onClick={() => {
+
+                                            setEditingId(null);
+
+                                            setFormData({
+                                                type: "expense",
+                                                amount: "",
+                                                category: "",
+                                                description: "",
+                                                date: ""
+                                            });
+
+                                            setCategoryMode("existing");
+                                        }}
+                                        sx={{ ml: 2 }}
+                                    >
+                                        Cancel
+                                    </Button>
+                                )}
 
                             </Box>
 
@@ -611,6 +675,12 @@ const Transactions = () => {
                                             {transaction.amount} DA
                                         </Typography>
 
+                                        <Button
+                                            variant="outlined"
+                                            onClick={() => handleEdit(transaction._id)}
+                                        >
+                                            Edit
+                                        </Button>
 
                                         <Button
                                             color="error"
