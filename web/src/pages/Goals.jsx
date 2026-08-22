@@ -432,9 +432,7 @@ const Goals = () => {
                                         <Button
                                             variant="contained"
                                             onClick={() =>
-                                                handleAddMoney(
-                                                    goal._id
-                                                )
+                                                handleAddMoney(goal._id)
                                             }
                                         >
                                             Add Money
