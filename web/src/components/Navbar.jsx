@@ -41,6 +41,14 @@ const Navbar = () => {
 
                     <Button
                         color="inherit"
+                        component={Link}
+                        to="/goals"
+                    >
+                        Goals
+                    </Button>
+
+                    <Button
+                        color="inherit"
                     >
                         Logout
                     </Button>

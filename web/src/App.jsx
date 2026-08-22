@@ -6,13 +6,7 @@ import Register from "./pages/Register";
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Transactions from './pages/Transactions';
-
-
-function Goals() {
-    return (
-        <h1>Goals</h1>
-    );
-}
+import Goals from './pages/Goals';
 
 
 function App() {
